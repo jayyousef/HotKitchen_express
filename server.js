@@ -41,13 +41,16 @@ app.post('/api/reservations', (req, res) => {
     fs.readFile('db/db.json', 'utf8', (err, data) => {
       console.log(data)
       let parsedData = JSON.parse(data);
-      //so the logic is the id of the last object will be i+1 of the next object
-      const newId = parseInt(parsedData.tables[parsedData.tables.length-1].id)+1;
-      newReservation.tables.id = newId;
 
-      if (parsedData.table.length >=5){
+
+
+      if (parsedData.tables.length > 5){
+        let newId = parseInt(parsedData.waitList[parsedData.waitList.length-1].id)+1;
+        newReservation.id = newId;
         parsedData.waitList.push(newReservation)
       } else {
+        let newId = parseInt(parsedData.tables[parsedData.tables.length-1].id)+1;
+        newReservation.id = newId;
         parsedData.tables.push(newReservation);
       }
     
@@ -58,7 +61,7 @@ app.post('/api/reservations', (req, res) => {
         if (err)
           console.log(err);
           else{
-            return //res.json(newReservation);
+            return res.json(newReservation);
           }
       })
     })
