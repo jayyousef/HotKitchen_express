@@ -42,10 +42,16 @@ app.post('/api/reservations', (req, res) => {
       console.log(data)
       let parsedData = JSON.parse(data);
       //so the logic is the id of the last object will be i+1 of the next object
-      const newId = parseInt(parsedData[parsedData.length-1].id)+1;
-      newReservation.id = newId;
+      const newId = parseInt(parsedData.tables[parsedData.tables.length-1].id)+1;
+      newReservation.tables.id = newId;
 
-      parsedData.push(newReservation);
+      if (parsedData.table.length >=5){
+        parsedData.waitList.push(newReservation)
+      } else {
+        parsedData.tables.push(newReservation);
+      }
+    
+
       const stringedData = JSON.stringify(parsedData)
 
       fs.writeFile('db/db.json', stringedData, (err) => {

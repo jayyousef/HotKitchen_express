@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>HOT RESTAURANT</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>HOT RESTAURANT</h1>
+            <h3>BOOK YOUR TABLE</h3>
+            <hr>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><strong>Make Your Reservation</strong></h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" role="form" id="form">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="number">Phone Number</label>
+                                <input type="text" class="form-control" id="phone" />
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control" id="email" />
+                            </div>
+                            <!-- <div class="form-group">
+                  <label for="force-points">Unique ID</label>
+                  <input type="text" class="form-control" id="force-points" />
+                </div> -->
+                        </form>
+                        <br />
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary btn-md" id="add-btn">
+                                <span class="fa fa-fire"></span> BOOK
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script src="https://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+    // Question: What is "e" short for?
+    //   addBtn.addEventListener('click', (e) => {
+    //     e.preventDefault();
+    //     // Question: What does this code do?
+    //     let charName = document.getElementById('name').value.trim();
+    //     let charRole = document.getElementById('role').value.trim();
+    //     let charAge = document.getElementById('age').value.trim();
+    //     let charFp = document.getElementById('force-points').value.trim();
+    //     let newCharacter = {
+    //       name: charName,
+    //       role: charRole,
+    //       age: parseInt(charAge),
+    //       forcePoints: parseInt(charFp),
+    //     };
+
+    // name: $("#reserveName").val().trim(),
+
+    $("#add-btn").click(function () {
+        const nameInput = $("#name").val().trim()
+        const phoneInput = $("#phone").val().trim()
+        const emailInput = $("#email").val().trim()
+        const formInput = {
+            name: nameInput,
+            phone: phoneInput,
+            email: emailInput
+        }
+
+        console.log(formInput)
+
+        $.post('/api/reservations',
+            formInput,
+            function (data, status) {
+                alert("Data: " + data + "\nStatus: " + status);
+                console.log(data)
+            });
+    });
+
+    // Question: What does this code do??
+    //     fetch('/api/characters', {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify(newCharacter),
+    //     })
+    //       .then((response) => response.json())
+    //       .then((data) => {
+    //         console.log('add.html', data);
+    //         alert(`Adding character: ${data.name}`);
+    //       })
+    //       .catch((error) => {
+    //         console.error('Error:', error);
+    //       });
+    //   });
+</script>
+
+</html>
